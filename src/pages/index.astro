@@ -1,0 +1,191 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { portfolio } from "../data/portfolio";
+const { profile, hero } = portfolio;
+const featured = portfolio.projects.filter((p) => p.featured);
+---
+
+<Layout title={`${profile.name} | ${profile.title}`} description={profile.summary}>
+  <Navbar />
+  <main>
+    <section class="hero" id="home">
+      <div class="grid-bg"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="availability"><span></span>{profile.location} · Open to opportunities</div>
+          <p class="eyebrow">{profile.eyebrow}</p>
+          <h1>{profile.headline}</h1>
+          <p class="hero-lead">{profile.summary}</p>
+          <p class="hero-sub">{profile.availability}</p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#work">Explore engineering work</a>
+            <a class="btn secondary" href={profile.github} target="_blank">GitHub ↗</a>
+            <a class="btn ghost" href={profile.resume} target="_blank">Download CV</a>
+          </div>
+
+          <div class="stack-line">
+            {hero.stack.map((item) => <span>{item}</span>)}
+          </div>
+        </div>
+
+        <aside class="ops-card">
+          <div class="ops-top">
+            <span class="window-dots"><i></i><i></i><i></i></span>
+            <span>debmalya@platform</span>
+          </div>
+          <div class="ops-body">
+            <p class="cmd"><span>$</span> {hero.command}</p>
+            <div class="status-list">
+              {hero.status.map((item) => (
+                <div>
+                  <span class="status-label"><i></i>{item.label}</span>
+                  <strong>{item.value}</strong>
+                </div>
+              ))}
+            </div>
+            <div class="pipeline">
+              <span>commit</span><b>→</b><span>build</span><b>→</b><span>deploy</span><b>→</b><span>observe</span>
+            </div>
+            <p class="cmd last"><span>$</span> focus --next <em>reliability_</em></p>
+          </div>
+        </aside>
+      </div>
+
+      <div class="container metrics">
+        {portfolio.metrics.map((metric) => (
+          <article><strong>{metric.value}</strong><span>{metric.label}</span></article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section intro" id="about">
+      <div class="container split-heading">
+        <div>
+          <p class="section-label">WHAT I DO</p>
+          <h2>Cloud infrastructure with an SRE mindset.</h2>
+        </div>
+        <p>
+          My work sits between infrastructure, software delivery and production operations:
+          building the platform, making delivery repeatable, instrumenting the system and improving
+          how teams respond when something fails.
+        </p>
+      </div>
+
+      <div class="container focus-grid">
+        {portfolio.focus.map((item, index) => (
+          <article>
+            <span>0{index + 1}</span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section work-section" id="work">
+      <div class="container">
+        <div class="section-head">
+          <div><p class="section-label">SELECTED ENGINEERING WORK</p><h2>Proof, not just a tool list.</h2></div>
+          <p>Projects are structured as engineering case studies: problem, architecture, controls, observability and outcomes.</p>
+        </div>
+        <div class="project-grid">
+          {featured.map((project) => <ProjectCard project={project} />)}
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark-band" id="skills">
+      <div class="container">
+        <p class="section-label">ENGINEERING TOOLBOX</p>
+        <h2>Core stack</h2>
+        <div class="skills-grid">
+          {portfolio.skills.map((skill) => (
+            <article><h3>{skill.category}</h3><div class="skill-tags">{skill.items.map((item) => <span>{item}</span>)}</div></article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="container">
+        <div class="section-head">
+          <div><p class="section-label">EXPERIENCE</p><h2>From cloud operations to platform reliability.</h2></div>
+          <p>Production ownership across AWS, Kubernetes, networking, CI/CD, GitOps, observability and incident response.</p>
+        </div>
+
+        <div class="experience-list">
+          {portfolio.experience.map((item) => (
+            <article>
+              <div class="experience-meta">
+                <span>{item.period}</span>
+                <h3>{item.company}</h3>
+                <p>{item.role}</p>
+              </div>
+              <div class="experience-body">
+                <h4>{item.summary}</h4>
+                <ul>{item.highlights.map((h) => <li>{h}</li>)}</ul>
+                <div class="skill-tags small">{item.technologies.map((t) => <span>{t}</span>)}</div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section principles">
+      <div class="container">
+        <p class="section-label">HOW I ENGINEER</p>
+        <h2>Reliability is a design choice.</h2>
+        <div class="principle-grid">
+          {portfolio.principles.map((item) => (
+            <article><h3>{item.title}</h3><p>{item.text}</p></article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section credentials">
+      <div class="container credential-grid">
+        <article>
+          <p class="section-label">CERTIFICATION</p>
+          <h3>{portfolio.certifications[0].name}</h3>
+          <p>{portfolio.certifications[0].issuer}</p>
+        </article>
+        <article>
+          <p class="section-label">EDUCATION</p>
+          <h3>{portfolio.education.degree}</h3>
+          <p>{portfolio.education.field} · {portfolio.education.institution}</p>
+        </article>
+        <article>
+          <p class="section-label">LANGUAGES</p>
+          {portfolio.languages.map((language) => <p>{language}</p>)}
+        </article>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="container contact-box">
+        <div>
+          <p class="section-label">EUROPE & INDIA</p>
+          <h2>Building the next reliable platform.</h2>
+          <p>{profile.availability}</p>
+        </div>
+        <div class="hero-actions">
+          <a class="btn primary" href={`mailto:${profile.email}`}>Email me</a>
+          <a class="btn secondary" href={profile.linkedin} target="_blank">LinkedIn ↗</a>
+          <a class="btn ghost" href={profile.github} target="_blank">GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <span>© 2026 {profile.name}</span>
+      <span>{profile.title}</span>
+    </div>
+  </footer>
+</Layout>

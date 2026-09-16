@@ -1,0 +1,51 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import { portfolio } from "../../data/portfolio";
+
+export function getStaticPaths() {
+  return portfolio.projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+const { project } = Astro.props;
+const sections = [
+  ["PROBLEM", "What needed to be solved", project.problem],
+  ["APPROACH", "How I approached it", project.solution],
+];
+---
+<Layout title={`${project.title} | ${portfolio.profile.name}`} description={project.description}>
+  <Navbar />
+  <main>
+    <section class="case-hero">
+      <div class="container narrow">
+        <div class="project-top">
+          <span class="project-category">{project.category}</span>
+          {project.status && <span class="project-status"><i></i>{project.status}</span>}
+        </div>
+        <h1>{project.title}</h1>
+        <p class="case-lead">{project.description}</p>
+        <div class="skill-tags">{project.technologies.map((t:string)=><span>{t}</span>)}</div>
+        <div class="hero-actions">
+          <a class="btn primary" href={project.github} target="_blank">Repository ↗</a>
+          <a class="btn ghost" href="/#work">← Back to work</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container narrow case-stack">
+        {sections.map(([label,title,text]) => text && (
+          <section><p class="section-label">{label}</p><h2>{title}</h2><p>{text}</p></section>
+        ))}
+
+        {project.architecture && <section><p class="section-label">ARCHITECTURE</p><h2>System design</h2><ul class="case-list">{project.architecture.map((x:string)=><li>{x}</li>)}</ul></section>}
+        {project.security && <section><p class="section-label">SECURITY & GUARDRAILS</p><h2>Blast radius as configuration</h2><ul class="case-list">{project.security.map((x:string)=><li>{x}</li>)}</ul></section>}
+        {project.observability && <section><p class="section-label">OBSERVABILITY</p><h2>Making failure visible</h2><ul class="case-list">{project.observability.map((x:string)=><li>{x}</li>)}</ul></section>}
+        {project.scenarios && <section><p class="section-label">FAILURE SCENARIOS</p><h2>What it handles</h2><ul class="case-list">{project.scenarios.map((x:string)=><li>{x}</li>)}</ul></section>}
+        {project.outcomes && <section><p class="section-label">OUTCOMES</p><h2>What this demonstrates</h2><ul class="case-list">{project.outcomes.map((x:string)=><li>{x}</li>)}</ul></section>}
+      </div>
+    </section>
+  </main>
+</Layout>

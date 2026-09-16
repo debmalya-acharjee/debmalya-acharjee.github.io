@@ -1,0 +1,19 @@
+<header class="header">
+  <nav class="navbar container">
+    <a class="logo" href="/"><span>DebmalyaAcharjee</span><i>/</i>platform</a>
+    <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
+    <ul class="nav-links">
+      <li><a href="/#about">Focus</a></li>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/#skills">Stack</a></li>
+      <li><a href="/#experience">Experience</a></li>
+      <li><a class="nav-cta" href="/#contact">Connect</a></li>
+    </ul>
+  </nav>
+</header>
+<script>
+  const button = document.querySelector(".menu-toggle");
+  const nav = document.querySelector(".nav-links");
+  button?.addEventListener("click", () => nav?.classList.toggle("open"));
+  document.querySelectorAll(".nav-links a").forEach((a) => a.addEventListener("click", () => nav?.classList.remove("open")));
+</script>
